@@ -1,4 +1,29 @@
 server:
-  port: 8080
+  port: 5000
   servlet:
     context-path: "/"
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+
+spring:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+  datasource:
+    url: jdbc:mariadb://zoy-winwine-dev.ccauvd1rzgyv.ap-southeast-1.rds.amazonaws.com:3306/winwine_webapp?useUnicode=yes&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor
+    username: admin
+    password: DBPassword
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 1800000
+      minimumIdle: 2
+      maximumPoolSize: 8
+    driverClassName: org.mariadb.jdbc.Driver
+    partitionEnabled: true

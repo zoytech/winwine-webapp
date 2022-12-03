@@ -1,11 +1,37 @@
 server:
-  port: 5000
+  port: 8080
   servlet:
     context-path: "/"
 
+management:
+  endpoint:
+    health:
+      show-components: ALWAYS
+      show-details: ALWAYS
+    service-registry:
+      enabled: false
+  metrics:
+    export:
+      prometheus:
+        descriptions: false
+  endpoints:
+    web:
+      base-path: "/"
+      exposure:
+        include: [ "info", "health", "prometheus" ]
+      path-mapping:
+        prometheus: "metrics"
+
 springdoc:
+  api-docs:
+    path: /winwine/web-app/documents/v1
   swagger-ui:
     disable-swagger-default-url: true
+    path: /winwine/web-app/documents/v1
+    
+http:
+  api:
+    prefix: /winwine/web-app/apis/v1
 
 spring:
   jpa:
@@ -16,14 +42,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MariaDB103Dialect
   datasource:
-    url: jdbc:mariadb://zoy-winwine-dev.ccauvd1rzgyv.ap-southeast-1.rds.amazonaws.com:3306/winwine_webapp?useUnicode=yes&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor
-    username: admin
-    password: DBPassword
     hikari:
       connectionTimeout: 30000
       idleTimeout: 600000
       maxLifetime: 1800000
       minimumIdle: 2
       maximumPoolSize: 8
-    driverClassName: org.mariadb.jdbc.Driver
     partitionEnabled: true
+    driver-class-name: org.mariadb.jdbc.Driver
+
+    url: jdbc:mariadb://zoy-winwine-dev.ccauvd1rzgyv.ap-southeast-1.rds.amazonaws.com:3306/winwine_webapp?useUnicode=yes&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor
+    username: admin
+    password: DBPassword
+
+common:
+  appEnv: QC

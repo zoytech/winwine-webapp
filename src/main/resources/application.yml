@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 5000
   servlet:
     context-path: "/"
 
@@ -24,7 +24,7 @@ management:
 
 springdoc:
   api-docs:
-    path: /winwine/web-app/documents/v1
+    path: /winwine/web-app/documents/v1/api-docs
   swagger-ui:
     disable-swagger-default-url: true
     path: /winwine/web-app/documents/v1

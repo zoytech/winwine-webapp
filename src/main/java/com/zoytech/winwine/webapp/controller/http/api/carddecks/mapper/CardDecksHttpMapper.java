@@ -1,6 +1,6 @@
 package com.zoytech.winwine.webapp.controller.http.api.carddecks.mapper;
 
-import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.PostCardDecksRequest;
+import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.PostCardDecksReqBody;
 import com.zoytech.winwine.webapp.features.carddecks.models.CardDeckModel;
 import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Mapper;
@@ -13,7 +13,7 @@ public interface CardDecksHttpMapper {
 
   CardDecksHttpMapper INSTANCE = Mappers.getMapper(CardDecksHttpMapper.class);
 
-  CardDeckModel mapRequest(PostCardDecksRequest request);
+  CardDeckModel mapRequest(PostCardDecksReqBody request);
 
 
 }

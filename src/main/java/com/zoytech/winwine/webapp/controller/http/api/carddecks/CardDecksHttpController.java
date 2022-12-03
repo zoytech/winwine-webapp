@@ -1,8 +1,9 @@
 package com.zoytech.winwine.webapp.controller.http.api.carddecks;
 
 import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.GetCardDeckByIdResponse;
-import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.PostCardDecksRequest;
-import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.PostCardDecksResponse;
+import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.GetCardDecksResponse;
+import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.PostCardDecksReqBody;
+import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.PostCardDecksResp;
 import com.zoytech.winwine.webapp.controller.http.api.carddecks.mapper.CardDecksHttpMapper;
 import com.zoytech.winwine.webapp.controller.http.constants.HttpPathConstants;
 import com.zoytech.winwine.webapp.features.carddecks.service.CardDecksService;
@@ -25,20 +26,25 @@ public class CardDecksHttpController {
 
 
   @PostMapping
-  public PostCardDecksResponse postCardDecks(@RequestBody PostCardDecksRequest requestBody) {
-    return PostCardDecksResponse.builder()
-        .data(cardDecksService.createCardDeck(CardDecksHttpMapper.INSTANCE.mapRequest(requestBody)))
+  public PostCardDecksResp postCardDecks(@RequestBody PostCardDecksReqBody requestBody) {
+    return PostCardDecksResp.builder()
+        .data(cardDecksService.save(CardDecksHttpMapper.INSTANCE.mapRequest(requestBody)))
+        .build();
+  }
+
+  @GetMapping
+  public GetCardDecksResponse findAll() {
+    return GetCardDecksResponse.builder()
+        .data(cardDecksService.findAll())
         .build();
   }
 
   @GetMapping(ResourceIdConstants.CARD_DECK_ID_PATH)
   public GetCardDeckByIdResponse getCardDeckById(@PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
     return GetCardDeckByIdResponse.builder()
-        .data(cardDecksService.getCardDeckById(cardDeckId))
+        .data(cardDecksService.getByCardDeckId(cardDeckId))
         .build();
   }
-
-
 
 
   private static final class ResourceNameConstants {

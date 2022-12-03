@@ -1,4 +1,4 @@
-package com.zoytech.winwine.webapp.controller.http.api.cards.carddecks.dtos.carddecks;
+package com.zoytech.winwine.webapp.controller.http.api.cards.dtos.cards;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class GetCardDeckByIdRequest implements Serializable {
+public class PostCardsResponse implements Serializable {
 
   Data data;
 

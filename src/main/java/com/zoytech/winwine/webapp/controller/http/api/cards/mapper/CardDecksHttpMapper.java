@@ -1,10 +1,7 @@
-package com.zoytech.winwine.webapp.controller.http.api.cards.carddecks.mapper;
+package com.zoytech.winwine.webapp.controller.http.api.cards.mapper;
 
 import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.Named;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.factory.Mappers;
 

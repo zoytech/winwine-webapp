@@ -1,4 +1,4 @@
-package com.zoytech.winwine.webapp.controller.http.api.cards.carddecks.dtos.cards;
+package com.zoytech.winwine.webapp.controller.http.api.cards.dtos.cards;
 
 import java.io.Serializable;
 import java.util.Set;

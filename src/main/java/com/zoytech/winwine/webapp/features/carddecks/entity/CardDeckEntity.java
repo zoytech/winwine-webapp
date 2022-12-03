@@ -4,10 +4,8 @@ package com.zoytech.winwine.webapp.features.carddecks.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +29,7 @@ public class CardDeckEntity {
   private String cardDeckId;
 
   @NotNull
+  @Column(length = 96)
   private String ownerId;
 
   @NotNull

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CardRepository extends JpaRepository<CardEntity, String> {
 
-  List<CardEntity> findAllByOwnerId(String ownerId);
 
   List<CardEntity> findAllByCardDeckId(String cardDeckId);
 }

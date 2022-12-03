@@ -1,12 +1,9 @@
 package com.zoytech.winwine.webapp.features.cards.entity;
 
 
-import com.zoytech.winwine.webapp.features.carddecks.entity.CardDeckEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,9 +27,9 @@ public class CardEntity {
   @Column(length = 96)
   private String cardId;
 
-  @ManyToOne
-  @JoinColumn(name = "card_deck_id")
-  private CardDeckEntity cardDeck;
+  @NotNull
+  @Column(length = 96)
+  private String cardDeckId;
 
   @NotNull
   private String cardTitle;

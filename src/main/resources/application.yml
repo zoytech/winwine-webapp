@@ -51,9 +51,3 @@ spring:
     partitionEnabled: true
     driver-class-name: org.mariadb.jdbc.Driver
 
-    url: jdbc:mariadb://zoy-winwine-dev.ccauvd1rzgyv.ap-southeast-1.rds.amazonaws.com:3306/winwine_webapp?useUnicode=yes&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor
-    username: admin
-    password: DBPassword
-
-common:
-  appEnv: QC

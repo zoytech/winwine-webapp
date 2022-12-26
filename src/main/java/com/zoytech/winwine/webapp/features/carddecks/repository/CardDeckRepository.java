@@ -13,4 +13,5 @@ public interface CardDeckRepository extends JpaRepository<CardDeckEntity, String
 
   CardDeckEntity findByCardDeckId(String cardDeckId);
 
+
 }

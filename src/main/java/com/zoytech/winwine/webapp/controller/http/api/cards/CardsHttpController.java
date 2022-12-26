@@ -1,6 +1,7 @@
 package com.zoytech.winwine.webapp.controller.http.api.cards;
 
-import com.zoytech.winwine.webapp.controller.http.api.carddecks.CardDecksHttpController.ResourceIdConstants;
+import com.zoytech.winwine.webapp.controller.http.api.cards.CardsHttpController.ResourceIdConstants;
+import com.zoytech.winwine.webapp.controller.http.api.cards.dtos.cards.GetCardsResponse;
 import com.zoytech.winwine.webapp.controller.http.api.cards.dtos.cards.PostCardsResponse;
 import com.zoytech.winwine.webapp.controller.http.constants.HttpPathConstants;
 import com.zoytech.winwine.webapp.features.cards.model.CardModel;
@@ -26,7 +27,15 @@ public class CardsHttpController {
   @Autowired
   private CardsService cardsService;
 
-  @PostMapping(ResourceIdConstants.CARD_DECK_ID_PATH)
+  @PostMapping(ResourceNameConstants.CARDS)
+  public ResponseEntity<GetCardsResponse> getCards(
+      @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
+    return new ResponseEntity<>(
+        GetCardsResponse.builder().data(cardsService.findAll(cardDeckId)).build(),
+        HttpStatus.CREATED);
+  }
+
+  @PostMapping
   public ResponseEntity<PostCardsResponse> postCards(
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId,
       @RequestBody List<CreateCardModel> cards) {
@@ -35,7 +44,7 @@ public class CardsHttpController {
         HttpStatus.CREATED);
   }
 
-  @PostMapping(ResourceIdConstants.CARD_DECK_ID_PATH)
+  @PostMapping
   public ResponseEntity<CardModel> postCard(
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId,
       @RequestBody CreateCardModel card) {

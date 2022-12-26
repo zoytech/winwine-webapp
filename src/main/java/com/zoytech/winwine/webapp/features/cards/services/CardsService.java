@@ -7,7 +7,9 @@ import java.util.List;
 public interface CardsService {
 
 
-  List<CardModel> findAll();
+  List<CardModel> findAll(String cardDeckId);
+
+  List<CardModel> findPreview(String cardDeckId);
 
   CardModel save(String cardDeckId, CreateCardModel createCardModel);
 

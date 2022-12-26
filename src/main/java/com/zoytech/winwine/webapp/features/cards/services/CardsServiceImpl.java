@@ -22,8 +22,14 @@ public class CardsServiceImpl implements CardsService {
   private CardRepository repository;
 
   @Override
-  public List<CardModel> findAll() {
+  public List<CardModel> findAll(String cardDeckId) {
     return CardMapper.INSTANCE.fromEntities(repository.findAll());
+  }
+
+  @Override
+  public List<CardModel> findPreview(String cardDeckId) {
+    var cards = findAll(cardDeckId);
+    return cards.subList(0, 3);
   }
 
   public CardModel save(String cardDeckId, CreateCardModel createCardModel) {

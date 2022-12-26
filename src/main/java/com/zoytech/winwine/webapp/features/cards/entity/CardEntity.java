@@ -1,6 +1,7 @@
 package com.zoytech.winwine.webapp.features.cards.entity;
 
 
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -38,6 +39,11 @@ public class CardEntity {
   private String cardDescription;
 
   private String cardImage;
+
+
+  private Timestamp createdAt;
+
+  private Timestamp updatedAt;
 
 
 }

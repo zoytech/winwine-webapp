@@ -7,6 +7,8 @@ import com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks.P
 import com.zoytech.winwine.webapp.controller.http.api.carddecks.mapper.CardDecksHttpMapper;
 import com.zoytech.winwine.webapp.controller.http.constants.HttpPathConstants;
 import com.zoytech.winwine.webapp.features.carddecks.service.CardDecksService;
+import com.zoytech.winwine.webapp.features.cards.services.CardsService;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,9 @@ public class CardDecksHttpController {
   @Autowired
   private CardDecksService cardDecksService;
 
+  @Autowired
+  private CardsService cardsService;
+
   @PostMapping
   public ResponseEntity<PostCardDecksResp> postCardDecks(@RequestBody PostCardDecksReqBody requestBody) {
     return new ResponseEntity<>(
@@ -39,15 +44,18 @@ public class CardDecksHttpController {
   @GetMapping
   public GetCardDecksResponse findAll() {
     return GetCardDecksResponse.builder()
-        .data(cardDecksService.findAll())
+        .data(cardDecksService.findAll().stream().map(cardDeckModel -> CardDecksHttpMapper.INSTANCE.map(cardDeckModel,
+            cardsService.findPreview(cardDeckModel.getCardDeckId()))).collect(Collectors.toList()))
         .build();
   }
 
   @GetMapping(ResourceIdConstants.CARD_DECK_ID_PATH)
   public GetCardDeckByIdResponse getCardDeckById(
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
+    cardsService.findPreview(cardDeckId);
     return GetCardDeckByIdResponse.builder()
-        .data(cardDecksService.getByCardDeckId(cardDeckId))
+        .data(CardDecksHttpMapper.INSTANCE.map(cardDecksService.getByCardDeckId(cardDeckId),
+            cardsService.findPreview(cardDeckId)))
         .build();
   }
 

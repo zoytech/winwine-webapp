@@ -24,11 +24,11 @@ public class CardEntity {
 
   @Id
   @NotNull
-  @Column(length = 96)
+  @Column(length = 50)
   private String cardId;
 
   @NotNull
-  @Column(length = 96)
+  @Column(length = 50)
   private String cardDeckId;
 
   @NotNull

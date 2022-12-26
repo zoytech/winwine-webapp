@@ -1,7 +1,9 @@
 package com.zoytech.winwine.webapp.controller.http.api.cards.dtos.cards;
 
+import com.zoytech.winwine.webapp.features.cards.model.CardModel;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,15 +18,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PostCardsResponse implements Serializable {
 
-  Data data;
+  @Builder.Default
+  List<CardModel> data = new ArrayList<>();
 
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Builder
-  public static final class Data {
 
-    private String cardDeckName;
-    private String cardDeckDescription;
-    private Set<String> hashTags;
-  }
 }

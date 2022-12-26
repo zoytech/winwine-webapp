@@ -34,6 +34,8 @@ http:
     prefix: /winwine/web-app/apis/v1
 
 spring:
+  profiles:
+    active: lc
   jpa:
     open-in-view: false
     hibernate:

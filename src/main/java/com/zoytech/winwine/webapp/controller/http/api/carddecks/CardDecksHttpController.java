@@ -52,7 +52,6 @@ public class CardDecksHttpController {
   @GetMapping(ResourceIdConstants.CARD_DECK_ID_PATH)
   public GetCardDeckByIdResponse getCardDeckById(
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
-    cardsService.findPreview(cardDeckId);
     return GetCardDeckByIdResponse.builder()
         .data(CardDecksHttpMapper.INSTANCE.map(cardDecksService.getByCardDeckId(cardDeckId),
             cardsService.findPreview(cardDeckId)))

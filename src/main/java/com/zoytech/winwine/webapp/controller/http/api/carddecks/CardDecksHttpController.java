@@ -48,7 +48,8 @@ public class CardDecksHttpController {
     return GetCardDecksResponse.builder()
         .data(cardDecksService.findAll().stream().map(cardDeckModel -> CardDecksHttpMapper.INSTANCE.map(cardDeckModel,
             cardDeckModel.getNumberOfCards() <= 0 ? new ArrayList<>() :
-                cardsService.findPreview(cardDeckModel.getCardDeckId()))).collect(Collectors.toList()))
+                cardsService.findPreview(cardDeckModel.getCardDeckId())))
+            .collect(Collectors.toList()))
         .build();
   }
 

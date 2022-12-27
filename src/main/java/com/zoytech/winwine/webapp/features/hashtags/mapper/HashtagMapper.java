@@ -1,10 +1,9 @@
 package com.zoytech.winwine.webapp.features.hashtags.mapper;
 
 import com.zoytech.winwine.webapp.features.hashtags.entity.HashtagEntity;
-import com.zoytech.winwine.webapp.features.hashtags.model.HashtagModel;
 import com.zoytech.winwine.webapp.features.hashtags.model.CreateHashtagModel;
+import com.zoytech.winwine.webapp.features.hashtags.model.HashtagModel;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.var;
 import org.mapstruct.CollectionMappingStrategy;
@@ -21,10 +20,9 @@ public interface HashtagMapper {
   HashtagEntity fromRequest(CreateHashtagModel model);
 
 
-  default HashtagEntity fromRequest(String cardDeckId, CreateHashtagModel model) {
+  default HashtagEntity fromRequest(String hashtagId, CreateHashtagModel model) {
     var requestEntity = HashtagMapper.INSTANCE.fromRequest(model);
-    requestEntity.setCardDeckId(cardDeckId);
-    requestEntity.setCardId(UUID.randomUUID().toString());
+    requestEntity.setHashtagId(hashtagId);
     return requestEntity;
   }
 

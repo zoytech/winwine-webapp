@@ -46,4 +46,9 @@ public class CardDecksServiceImpl implements CardDecksService {
       return null;
     }
   }
+
+  @Override
+  public void updateNumberOfCards(String cardDeckId, int numberOfCards) {
+    repository.updateNumberOfCards(cardDeckId, numberOfCards);
+  }
 }

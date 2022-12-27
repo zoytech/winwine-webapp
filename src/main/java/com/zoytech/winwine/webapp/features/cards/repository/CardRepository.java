@@ -12,4 +12,5 @@ public interface CardRepository extends JpaRepository<CardEntity, String> {
 
   List<CardEntity> findAllByCardDeckId(String cardDeckId);
 
+
 }

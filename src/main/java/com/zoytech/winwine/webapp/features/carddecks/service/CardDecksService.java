@@ -11,4 +11,6 @@ public interface CardDecksService {
   CardDeckModel save(CardDeckModel cardDeckModel);
 
   CardDeckModel getByCardDeckId(String cardDeckId);
+
+  void updateNumberOfCards(String cardDeckId, int numberOfCards);
 }

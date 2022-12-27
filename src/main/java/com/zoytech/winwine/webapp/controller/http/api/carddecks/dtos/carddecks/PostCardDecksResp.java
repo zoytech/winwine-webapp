@@ -15,6 +15,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @Builder
 public class PostCardDecksResp implements Serializable {
-
   CardDeckModel data;
 }

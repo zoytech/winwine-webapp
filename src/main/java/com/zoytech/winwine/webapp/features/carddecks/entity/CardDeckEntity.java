@@ -35,6 +35,8 @@ public class CardDeckEntity {
   @NotNull
   private String cardDeckName;
 
+  private String cardDeckImage;
+
   private String cardDeckDescription;
 
   private Integer numberOfCards;

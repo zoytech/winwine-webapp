@@ -29,7 +29,7 @@ public class CardsServiceImpl implements CardsService {
   @Override
   public List<CardModel> findPreview(String cardDeckId) {
     var cards = findAll(cardDeckId);
-    return cards.subList(0, 3);
+    return cards.subList(0, Math.min(3, cards.size()));
   }
 
   public CardModel save(String cardDeckId, CreateCardModel createCardModel) {
@@ -49,8 +49,5 @@ public class CardsServiceImpl implements CardsService {
     return new ArrayList<>();
   }
 
-  @Override
-  public List<CardModel> getCardsByCardDeckId(String cardDeckId) {
-    return CardMapper.INSTANCE.fromEntities(repository.findAllByCardDeckId(cardDeckId));
-  }
+
 }

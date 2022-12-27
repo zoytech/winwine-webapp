@@ -21,6 +21,8 @@ public class CardDeckModel {
   private String cardDeckId;
   private String ownerId;
   private String cardDeckName;
+
+  private String cardDeckImage;
   private String cardDeckDescription;
 
   @Default

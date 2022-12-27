@@ -15,5 +15,4 @@ public interface CardsService {
 
   List<CardModel> saveAll(String cardDeckId, List<CreateCardModel> createCardModel);
 
-  List<CardModel> getCardsByCardDeckId(String cardDeckId);
 }

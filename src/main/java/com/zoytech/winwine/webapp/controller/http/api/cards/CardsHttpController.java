@@ -1,10 +1,10 @@
 package com.zoytech.winwine.webapp.controller.http.api.cards;
 
 import com.zoytech.winwine.webapp.controller.http.api.cards.CardsHttpController.ResourceIdConstants;
+import com.zoytech.winwine.webapp.controller.http.api.cards.CardsHttpController.ResourceNameConstants;
 import com.zoytech.winwine.webapp.controller.http.api.cards.dtos.cards.GetCardsResponse;
 import com.zoytech.winwine.webapp.controller.http.api.cards.dtos.cards.PostCardsResponse;
 import com.zoytech.winwine.webapp.controller.http.constants.HttpPathConstants;
-import com.zoytech.winwine.webapp.features.cards.model.CardModel;
 import com.zoytech.winwine.webapp.features.cards.model.CreateCardModel;
 import com.zoytech.winwine.webapp.features.cards.services.CardsService;
 import java.util.List;
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,13 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("${http.api.prefix}" + HttpPathConstants.CARD_DECKS + ResourceIdConstants.CARD_DECK_ID_PATH)
+@RequestMapping("${http.api.prefix}" + HttpPathConstants.CARD_DECKS
+    + ResourceIdConstants.CARD_DECK_ID_PATH
+    + ResourceNameConstants.CARDS)
 public class CardsHttpController {
 
   @Autowired
   private CardsService cardsService;
 
-  @PostMapping(ResourceNameConstants.CARDS)
+  @GetMapping
   public ResponseEntity<GetCardsResponse> getCards(
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
     return new ResponseEntity<>(
@@ -44,12 +47,12 @@ public class CardsHttpController {
         HttpStatus.CREATED);
   }
 
-  @PostMapping
-  public ResponseEntity<CardModel> postCard(
-      @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId,
-      @RequestBody CreateCardModel card) {
-    return new ResponseEntity<>(cardsService.save(cardDeckId, card), HttpStatus.CREATED);
-  }
+//  @PostMapping
+//  public ResponseEntity<CardModel> postCard(
+//      @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId,
+//      @RequestBody CreateCardModel card) {
+//    return new ResponseEntity<>(cardsService.save(cardDeckId, card), HttpStatus.CREATED);
+//  }
 
   public static final class ResourceNameConstants {
 

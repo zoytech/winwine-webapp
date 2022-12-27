@@ -15,5 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PostCardDecksReqBody implements Serializable {
   private String cardDeckName;
+
+  private String cardDeckImage;
   private String cardDeckDescription;
 }

@@ -25,7 +25,7 @@ public class CardDeckModel {
   private String cardDeckImage;
   private String cardDeckDescription;
 
-  private Integer numberOfCards;
+  private int numberOfCards;
 
   @Default
   private List<CardModel> previewCards = new ArrayList<>();

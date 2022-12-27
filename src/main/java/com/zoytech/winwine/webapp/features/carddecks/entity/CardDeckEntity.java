@@ -39,7 +39,7 @@ public class CardDeckEntity {
 
   private String cardDeckDescription;
 
-  private Integer numberOfCards;
+  private int numberOfCards;
 
 
 }

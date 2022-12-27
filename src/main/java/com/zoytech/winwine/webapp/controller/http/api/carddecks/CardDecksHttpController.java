@@ -8,8 +8,10 @@ import com.zoytech.winwine.webapp.controller.http.api.carddecks.mapper.CardDecks
 import com.zoytech.winwine.webapp.controller.http.constants.HttpPathConstants;
 import com.zoytech.winwine.webapp.features.carddecks.service.CardDecksService;
 import com.zoytech.winwine.webapp.features.cards.services.CardsService;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,16 +47,19 @@ public class CardDecksHttpController {
   public GetCardDecksResponse findAll() {
     return GetCardDecksResponse.builder()
         .data(cardDecksService.findAll().stream().map(cardDeckModel -> CardDecksHttpMapper.INSTANCE.map(cardDeckModel,
-            cardsService.findPreview(cardDeckModel.getCardDeckId()))).collect(Collectors.toList()))
+            cardDeckModel.getNumberOfCards() <= 0 ? new ArrayList<>() :
+                cardsService.findPreview(cardDeckModel.getCardDeckId()))).collect(Collectors.toList()))
         .build();
   }
 
   @GetMapping(ResourceIdConstants.CARD_DECK_ID_PATH)
   public GetCardDeckByIdResponse getCardDeckById(
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
+    var cardDeck = CardDecksHttpMapper.INSTANCE.map(cardDecksService.getByCardDeckId(cardDeckId));
+    cardDeck.setPreviewCards(cardDeck.getNumberOfCards() <= 0 ? new ArrayList<>() :
+        cardsService.findPreview(cardDeckId));
     return GetCardDeckByIdResponse.builder()
-        .data(CardDecksHttpMapper.INSTANCE.map(cardDecksService.getByCardDeckId(cardDeckId),
-            cardsService.findPreview(cardDeckId)))
+        .data(cardDeck)
         .build();
   }
 

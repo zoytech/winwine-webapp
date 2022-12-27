@@ -18,7 +18,7 @@ public interface CardDeckRepository extends JpaRepository<CardDeckEntity, String
   CardDeckEntity findByCardDeckId(String cardDeckId);
 
   @Transactional
-  @Modifying
+  @Modifying(clearAutomatically = true)
   @Query(value = "UPDATE `card_deck` SET `number_of_cards` = :numberOfCards WHERE `card_deck_id` = :cardDeckId", nativeQuery = true)
   void updateNumberOfCards(@Param("cardDeckId") String cardDeckId,
       @Param("numberOfCards") int numberOfCards);

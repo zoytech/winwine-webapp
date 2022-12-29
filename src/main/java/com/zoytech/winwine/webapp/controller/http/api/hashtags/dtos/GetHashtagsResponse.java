@@ -1,6 +1,7 @@
-package com.zoytech.winwine.webapp.controller.http.api.carddecks.dtos.carddecks;
+package com.zoytech.winwine.webapp.controller.http.api.hashtags.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,11 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class PostCardDecksReqBody implements Serializable {
-  private String cardDeckName;
+public class GetHashtagsResponse implements Serializable {
 
-  private String cardDeckImage;
-  private String cardDeckDescription;
+  @Builder.Default
+  List<String> data = new ArrayList<>();
 
-  private List<String> hashtags;
 }

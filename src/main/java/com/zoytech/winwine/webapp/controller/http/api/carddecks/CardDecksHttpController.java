@@ -44,24 +44,24 @@ public class CardDecksHttpController {
   }
 
   @GetMapping
-  public GetCardDecksResponse findAll() {
-    return GetCardDecksResponse.builder()
+  public ResponseEntity<GetCardDecksResponse> findAll() {
+    return new ResponseEntity<>(GetCardDecksResponse.builder()
         .data(cardDecksService.findAll().stream().map(cardDeckModel -> CardDecksHttpMapper.INSTANCE.map(cardDeckModel,
-            cardDeckModel.getNumberOfCards() <= 0 ? new ArrayList<>() :
-                cardsService.findPreview(cardDeckModel.getCardDeckId())))
+                cardDeckModel.getNumberOfCards() <= 0 ? new ArrayList<>() :
+                    cardsService.findPreview(cardDeckModel.getCardDeckId())))
             .collect(Collectors.toList()))
-        .build();
+        .build(), HttpStatus.OK);
   }
 
   @GetMapping(ResourceIdConstants.CARD_DECK_ID_PATH)
-  public GetCardDeckByIdResponse getCardDeckById(
+  public ResponseEntity<GetCardDeckByIdResponse> getCardDeckById(
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
     var cardDeck = CardDecksHttpMapper.INSTANCE.map(cardDecksService.getByCardDeckId(cardDeckId));
     cardDeck.setPreviewCards(cardDeck.getNumberOfCards() <= 0 ? new ArrayList<>() :
         cardsService.findPreview(cardDeckId));
-    return GetCardDeckByIdResponse.builder()
+    return new ResponseEntity<>(GetCardDeckByIdResponse.builder()
         .data(cardDeck)
-        .build();
+        .build(), HttpStatus.OK);
   }
 
   public static final class ResourceIdConstants {

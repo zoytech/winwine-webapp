@@ -35,7 +35,7 @@ public class CardsHttpController {
       @PathVariable(ResourceIdConstants.CARD_DECK_ID_VARIABLE) String cardDeckId) {
     return new ResponseEntity<>(
         GetCardsResponse.builder().data(cardsService.findAll(cardDeckId)).build(),
-        HttpStatus.CREATED);
+        HttpStatus.OK);
   }
 
   @PostMapping

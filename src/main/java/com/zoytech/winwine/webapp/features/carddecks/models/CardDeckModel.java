@@ -3,6 +3,7 @@ package com.zoytech.winwine.webapp.features.carddecks.models;
 
 import com.zoytech.winwine.webapp.features.cards.model.CardModel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,10 @@ public class CardDeckModel {
   private String cardDeckDescription;
 
   private int numberOfCards;
+
+
+  @Default
+  private List<String> hashtags = new ArrayList<>(Arrays.asList("#18+", "#TớiBến"));
 
   @Default
   private List<CardModel> previewCards = new ArrayList<>();

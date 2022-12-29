@@ -8,4 +8,6 @@ public class HttpPathConstants {
 
   public static final String CARD_DECKS = "/card-decks";
 
+  public static final String HASHTAGS = "/hashtags";
+
 }

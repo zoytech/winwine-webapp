@@ -37,7 +37,7 @@ public class CardDecksServiceImpl implements CardDecksService {
     var result = CardDeckMapper.INSTANCE.fromEntities(repository.findAll());
     result.forEach(cardDeckModel -> {
       cardDeckModel.setHashtags(
-          cardDeckHashtagRepository.findAllByCardDeckId(cardDeckModel.getCardDeckId()).stream().map(
+          cardDeckHashtagRepository.findByCardDeckId(cardDeckModel.getCardDeckId()).stream().map(
               CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList()));
     });
     return result;
@@ -75,7 +75,7 @@ public class CardDecksServiceImpl implements CardDecksService {
       log.info("CardDecksServiceImpl-createCardDeck entity={}", JsonUtils.json(entity));
       var model = CardDeckMapper.INSTANCE.fromEntity(entity);
       model.setHashtags(
-          cardDeckHashtagRepository.findAllByCardDeckId(model.getCardDeckId()).stream().map(
+          cardDeckHashtagRepository.findByCardDeckId(model.getCardDeckId()).stream().map(
               CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList()));
       return model;
     } else {

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CardDeckHashtagRepository extends JpaRepository<CardDeckHashtagEntity, CardDeckHashtagPrimaryKey> {
 
-  List<CardDeckHashtagEntity> findAllByCardDeckId(String cardDeckId);
+  List<CardDeckHashtagEntity> findByCardDeckId(String cardDeckId);
 
 }

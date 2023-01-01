@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface CardRepository extends JpaRepository<CardEntity, String> {
 
 
-  List<CardEntity> findAllByCardDeckId(String cardDeckId);
+  List<CardEntity> findByCardDeckId(String cardDeckId);
 
 
 }

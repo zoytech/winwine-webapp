@@ -27,7 +27,7 @@ public class CardsServiceImpl implements CardsService {
 
   @Override
   public List<CardModel> findAll(String cardDeckId) {
-    return CardMapper.INSTANCE.fromEntities(repository.findAllByCardDeckId(cardDeckId));
+    return CardMapper.INSTANCE.fromEntities(repository.findByCardDeckId(cardDeckId));
   }
 
   @Override

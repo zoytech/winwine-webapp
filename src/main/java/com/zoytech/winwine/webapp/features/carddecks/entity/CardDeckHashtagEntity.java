@@ -1,7 +1,6 @@
-package com.zoytech.winwine.webapp.features.hashtags.entity;
+package com.zoytech.winwine.webapp.features.carddecks.entity;
 
 
-import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,25 +24,12 @@ public class CardDeckHashtagEntity {
 
   @Id
   @NotNull
-  @Column(length = 50)
-  private String cardId;
-
-  @NotNull
-  @Column(length = 50)
+  @Column(length = 96)
   private String cardDeckId;
 
   @NotNull
-  private String cardTitle;
-
-  @NotNull
-  private String cardDescription;
-
-  private String cardImage;
-
-
-  private Timestamp createdAt;
-
-  private Timestamp updatedAt;
+  @Column(length = 96)
+  private String hashtagId;
 
 
 }

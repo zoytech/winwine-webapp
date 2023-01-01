@@ -1,4 +1,4 @@
-package com.zoytech.winwine.webapp.features.hashtags.model;
+package com.zoytech.winwine.webapp.features.carddecks.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -12,9 +12,8 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HashtagModel {
 
+public class CardDeckHashtagPrimaryKey {
+  private String cardDeckId;
   private String hashtagId;
-
-  private String hashtagDescription;
 }

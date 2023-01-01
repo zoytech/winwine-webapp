@@ -41,5 +41,4 @@ public class CardDeckEntity {
 
   private int numberOfCards;
 
-
 }

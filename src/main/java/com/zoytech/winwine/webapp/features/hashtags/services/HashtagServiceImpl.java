@@ -7,7 +7,9 @@ import com.zoytech.winwine.webapp.features.hashtags.model.CreateHashtagModel;
 import com.zoytech.winwine.webapp.features.hashtags.model.HashtagModel;
 import com.zoytech.winwine.webapp.features.hashtags.repository.HashtagRepository;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,31 @@ public class HashtagServiceImpl implements HashtagService {
   @Autowired
   private HashtagRepository repository;
 
+  private static final Map<String, HashtagModel> hashtagMap = new HashMap<>();
+
   @Override
-  public List<HashtagModel> findAll(String cardDeckId) {
-    return HashtagMapper.INSTANCE.fromEntities(repository.findAll());
+  public boolean isExist(String hashtagId) {
+    checkAndWarmUp();
+    return hashtagMap.containsKey(hashtagId);
   }
 
+  @Override
+  public List<HashtagModel> findAll() {
+    checkAndWarmUp();
+    return new ArrayList<>(hashtagMap.values());
+  }
 
-  public HashtagModel save(String cardDeckId, CreateHashtagModel createHashtagModel) {
-    var requestEntity = HashtagMapper.INSTANCE.fromRequest(cardDeckId, createHashtagModel);
+  private void checkAndWarmUp() {
+    if (CollectionUtils.isEmpty(hashtagMap)) {
+      repository.findAll().forEach((entity) -> {
+        var model = HashtagMapper.INSTANCE.fromEntity(entity);
+        hashtagMap.put(entity.getHashtagId(), model);
+      });
+    }
+  }
+
+  public HashtagModel save(CreateHashtagModel createHashtagModel) {
+    var requestEntity = HashtagMapper.INSTANCE.fromRequest( createHashtagModel);
     var result = repository.save(requestEntity);
     return HashtagMapper.INSTANCE.fromEntity(result);
   }

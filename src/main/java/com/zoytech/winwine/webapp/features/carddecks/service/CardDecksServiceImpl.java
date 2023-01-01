@@ -1,15 +1,22 @@
 package com.zoytech.winwine.webapp.features.carddecks.service;
 
+import com.zoytech.winwine.webapp.common.enumerations.ResponseCode;
+import com.zoytech.winwine.webapp.common.exceptions.InvalidInfoException;
 import com.zoytech.winwine.webapp.common.utils.JsonUtils;
+import com.zoytech.winwine.webapp.features.carddecks.entity.CardDeckHashtagEntity;
 import com.zoytech.winwine.webapp.features.carddecks.mapper.CardDeckMapper;
 import com.zoytech.winwine.webapp.features.carddecks.models.CardDeckModel;
+import com.zoytech.winwine.webapp.features.carddecks.repository.CardDeckHashtagRepository;
 import com.zoytech.winwine.webapp.features.carddecks.repository.CardDeckRepository;
+import com.zoytech.winwine.webapp.features.hashtags.services.HashtagService;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @Slf4j
@@ -18,19 +25,44 @@ public class CardDecksServiceImpl implements CardDecksService {
   @Autowired
   private CardDeckRepository repository;
 
+  @Autowired
+  private HashtagService hashtagService;
 
+  @Autowired
+  private CardDeckHashtagRepository cardDeckHashtagRepository;
 
   @Override
   public List<CardDeckModel> findAll() {
-    return CardDeckMapper.INSTANCE.fromEntities(repository.findAll());
+
+    var result = CardDeckMapper.INSTANCE.fromEntities(repository.findAll());
+    result.forEach(cardDeckModel -> {
+      cardDeckModel.setHashtags(
+          cardDeckHashtagRepository.findAllByCardDeckId(cardDeckModel.getCardDeckId()).stream().map(
+              CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList()));
+    });
+    return result;
   }
 
   public CardDeckModel save(CardDeckModel cardDeckModel) {
-    var requestEntity  = CardDeckMapper.INSTANCE.fromModel(cardDeckModel);
+    var requestEntity = CardDeckMapper.INSTANCE.fromModel(cardDeckModel);
     requestEntity.setCardDeckId(UUID.randomUUID().toString());
     requestEntity.setOwnerId("0");
     requestEntity.setNumberOfCards(0);
     var result = repository.save(requestEntity);
+
+    if (!CollectionUtils.isEmpty(cardDeckModel.getHashtags())) {
+      cardDeckModel.getHashtags().forEach(hashtag -> {
+            if (!hashtagService.isExist(hashtag)) {
+              throw new InvalidInfoException(ResponseCode.HASHTAG_NOT_FOUND);
+            }
+            cardDeckHashtagRepository.save(CardDeckHashtagEntity.builder()
+                .cardDeckId(result.getCardDeckId())
+                .hashtagId(hashtag)
+                .build());
+          }
+      );
+    }
+
     log.info("CardDecksServiceImpl-createCardDeck entity={}", JsonUtils.json(result));
     return CardDeckMapper.INSTANCE.fromEntity(result);
   }
@@ -41,7 +73,11 @@ public class CardDecksServiceImpl implements CardDecksService {
     if (optional.isPresent()) {
       var entity = optional.get();
       log.info("CardDecksServiceImpl-createCardDeck entity={}", JsonUtils.json(entity));
-      return CardDeckMapper.INSTANCE.fromEntity(entity);
+      var model = CardDeckMapper.INSTANCE.fromEntity(entity);
+      model.setHashtags(
+          cardDeckHashtagRepository.findAllByCardDeckId(model.getCardDeckId()).stream().map(
+              CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList()));
+      return model;
     } else {
       return null;
     }

@@ -41,6 +41,7 @@ public class CardDecksHttpController {
     var cards =  cardsService.saveAll(cardDeck.getCardDeckId(), requestBody.getCards()) ;
     cardDeck.setPreviewCards(cards.stream().limit(3).collect(Collectors.toList()));
     cardDeck.setCards(cards);
+    cardDeck.setNumberOfCards(cards.size());
     return new ResponseEntity<>(
         PostCardDecksResp.builder()
             .data(cardDeck)

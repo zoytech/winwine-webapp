@@ -12,4 +12,5 @@ public interface CardDeckHashtagRepository extends JpaRepository<CardDeckHashtag
 
   List<CardDeckHashtagEntity> findByCardDeckId(String cardDeckId);
 
+
 }

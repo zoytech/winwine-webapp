@@ -10,6 +10,7 @@ import com.zoytech.winwine.webapp.features.carddecks.service.CardDecksService;
 import com.zoytech.winwine.webapp.features.cards.services.CardsService;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,13 @@ public class CardDecksHttpController {
   private CardsService cardsService;
 
   @PostMapping
-  public ResponseEntity<PostCardDecksResp> postCardDecks(@RequestBody PostCardDecksReqBody requestBody) {
+  public ResponseEntity<PostCardDecksResp> postCardDecks(@Valid @RequestBody PostCardDecksReqBody requestBody) {
+    var cardDeck = cardDecksService.save(CardDecksHttpMapper.INSTANCE.mapRequest(requestBody));
+    var cards =  cardsService.saveAll(cardDeck.getCardDeckId(), requestBody.getCards()) ;
+    cardDeck.setCards(cards);
     return new ResponseEntity<>(
         PostCardDecksResp.builder()
-            .data(cardDecksService.save(CardDecksHttpMapper.INSTANCE.mapRequest(requestBody)))
+            .data(cardDeck)
             .build(),
         HttpStatus.CREATED);
   }
@@ -65,6 +69,10 @@ public class CardDecksHttpController {
   }
 
   public static final class ResourceIdConstants {
+
+    private ResourceIdConstants() {
+
+    }
 
     public static final String CARD_DECK_ID_VARIABLE = "cardDeckId";
     public static final String CARD_DECK_ID_PATH = "/{" + CARD_DECK_ID_VARIABLE + "}";

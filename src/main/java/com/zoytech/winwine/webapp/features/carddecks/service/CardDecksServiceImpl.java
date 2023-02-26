@@ -9,6 +9,7 @@ import com.zoytech.winwine.webapp.features.carddecks.models.CardDeckModel;
 import com.zoytech.winwine.webapp.features.carddecks.repository.CardDeckHashtagRepository;
 import com.zoytech.winwine.webapp.features.carddecks.repository.CardDeckRepository;
 import com.zoytech.winwine.webapp.features.hashtags.services.HashtagService;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,9 +37,9 @@ public class CardDecksServiceImpl implements CardDecksService {
 
     var result = CardDeckMapper.INSTANCE.fromEntities(repository.findAll());
     result.forEach(cardDeckModel -> {
-      cardDeckModel.setHashtags(
+      cardDeckModel.setHashtags(new HashSet<>(
           cardDeckHashtagRepository.findByCardDeckId(cardDeckModel.getCardDeckId()).stream().map(
-              CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList()));
+              CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList())));
     });
     return result;
   }
@@ -74,9 +75,9 @@ public class CardDecksServiceImpl implements CardDecksService {
       var entity = optional.get();
       log.info("CardDecksServiceImpl-createCardDeck entity={}", JsonUtils.json(entity));
       var model = CardDeckMapper.INSTANCE.fromEntity(entity);
-      model.setHashtags(
+      model.setHashtags(new HashSet<>(
           cardDeckHashtagRepository.findByCardDeckId(model.getCardDeckId()).stream().map(
-              CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList()));
+              CardDeckHashtagEntity::getHashtagId).collect(Collectors.toList())));
       return model;
     } else {
       return null;

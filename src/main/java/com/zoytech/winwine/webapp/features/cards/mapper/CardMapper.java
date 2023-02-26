@@ -11,6 +11,7 @@ import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.factory.Mappers;
+import org.thymeleaf.util.StringUtils;
 
 @Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
     collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
@@ -30,8 +31,13 @@ public interface CardMapper {
 
   default List<CardEntity> fromRequests(String cardDeckId, List<CreateCardModel> models) {
     return models.stream()
-        .map(model -> CardMapper.INSTANCE.fromRequest(cardDeckId, model))
-        .collect(Collectors.toList());
+        .map(model -> {
+          var entity = CardMapper.INSTANCE.fromRequest(cardDeckId, model);
+          if (StringUtils.isEmpty(entity.getCardId())) {
+            entity.setCardId(UUID.randomUUID().toString());
+          }
+          return entity;
+        }).collect(Collectors.toList());
   }
 
   CardEntity fromModel(CardModel model);

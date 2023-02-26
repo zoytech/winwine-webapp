@@ -39,6 +39,7 @@ public class CardDecksHttpController {
   public ResponseEntity<PostCardDecksResp> postCardDecks(@Valid @RequestBody PostCardDecksReqBody requestBody) {
     var cardDeck = cardDecksService.save(CardDecksHttpMapper.INSTANCE.mapRequest(requestBody));
     var cards =  cardsService.saveAll(cardDeck.getCardDeckId(), requestBody.getCards()) ;
+    cardDeck.setPreviewCards(cards.stream().limit(3).collect(Collectors.toList()));
     cardDeck.setCards(cards);
     return new ResponseEntity<>(
         PostCardDecksResp.builder()

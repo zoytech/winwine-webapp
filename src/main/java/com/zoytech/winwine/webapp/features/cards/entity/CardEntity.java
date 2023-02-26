@@ -35,7 +35,7 @@ public class CardEntity {
   @NotNull
   private String cardTitle;
 
-  @NotNull
+
   private String cardDescription;
 
   private String cardImage;
